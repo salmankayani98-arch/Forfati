@@ -3,58 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#c2185b">
-<title>Just For You</title>
+<meta name="theme-color" content="#8e0b3a">
+<title>A Special Place Just For You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --rose:#ff4d8d; --red:#d6103f; --deep:#8e0b3a; --blush:#ffd6e3; --white:#fff8fa;
-    --glass:rgba(255,255,255,.16); --glass-border:rgba(255,255,255,.35);
+    --glass:rgba(255,255,255,.14); --glass-border:rgba(255,255,255,.35);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
+  html,body{min-height:100%}
   body{
     font-family:'Poppins',system-ui,sans-serif;color:var(--white);
-    background:linear-gradient(135deg,#ff6b9d 0%,#d6103f 45%,#7a0a35 100%);
-    background-size:300% 300%;animation:bgShift 16s ease-in-out infinite;
+    background:linear-gradient(135deg,#ff6b9d 0%,#d6103f 42%,#6e0830 100%);
+    background-size:300% 300%;animation:bgShift 18s ease-in-out infinite;
     overflow-x:hidden;min-height:100svh;
   }
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+    background:radial-gradient(ellipse at center,transparent 45%,rgba(60,0,25,.45) 100%)}
   @keyframes bgShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 
-  /* soft glowing orbs */
   .orb{position:fixed;border-radius:50%;filter:blur(60px);opacity:.45;pointer-events:none;z-index:0;animation:orb 14s ease-in-out infinite}
   .orb.o1{width:320px;height:320px;background:#ffb3cf;top:-80px;left:-80px}
   .orb.o2{width:380px;height:380px;background:#ff2d6f;bottom:-120px;right:-100px;animation-delay:-5s}
   .orb.o3{width:240px;height:240px;background:#fff;top:40%;left:55%;opacity:.18;animation-delay:-9s}
   @keyframes orb{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-40px) scale(1.15)}}
 
-  /* floating hearts layer */
-  #floaters{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1}
+  #sparkles{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .sp{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;box-shadow:0 0 8px 2px rgba(255,255,255,.8);opacity:0;animation:twinkle 4s ease-in-out infinite}
+  @keyframes twinkle{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:.9;transform:scale(1.2)}}
+
+  #floaters,#petals{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1}
   .floater{position:absolute;bottom:-60px;will-change:transform,opacity;animation:floatUp linear forwards;filter:drop-shadow(0 0 6px rgba(255,255,255,.4))}
   @keyframes floatUp{
     0%{transform:translate3d(0,0,0) rotate(0deg) scale(.8);opacity:0}
     10%{opacity:.9}
     100%{transform:translate3d(var(--drift),-115vh,0) rotate(var(--rot)) scale(1.1);opacity:0}
   }
+  .petal{position:absolute;top:-30px;width:var(--s);height:calc(var(--s) * 1.25);border-radius:150% 0 150% 0;
+    background:linear-gradient(135deg,#ff9fc0,#e0115f);opacity:.85;animation:petalFall linear forwards;will-change:transform}
+  @keyframes petalFall{
+    0%{transform:translate3d(0,0,0) rotate(0deg) rotateX(0)}
+    50%{transform:translate3d(var(--sway),55vh,0) rotate(180deg) rotateX(180deg)}
+    100%{transform:translate3d(calc(var(--sway) * -1),112vh,0) rotate(360deg) rotateX(360deg)}
+  }
 
-  /* screens */
-  .screen{position:relative;z-index:2;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:24px 18px 80px;
-    transition:opacity .8s ease,transform .8s ease}
+  .screen{position:relative;z-index:2;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:24px 18px 90px}
   .screen.hidden{display:none}
-  .screen.fade-out{opacity:0;transform:scale(.96)}
 
-  /* login card */
   .card{
-    width:min(94vw,440px);padding:42px 30px 34px;text-align:center;border-radius:28px;
+    width:min(94vw,440px);padding:40px 30px 32px;text-align:center;border-radius:30px;
     background:var(--glass);border:1px solid var(--glass-border);
     backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-    box-shadow:0 30px 80px rgba(80,0,30,.4),inset 0 1px 0 rgba(255,255,255,.4);
+    box-shadow:0 30px 80px rgba(80,0,30,.45),inset 0 1px 0 rgba(255,255,255,.45);
     animation:cardIn 1.2s cubic-bezier(.2,.9,.3,1) both;
   }
   @keyframes cardIn{from{opacity:0;transform:translateY(40px) scale(.94)}to{opacity:1;transform:none}}
-  .badge{font-size:46px;display:inline-block;animation:beat 1.6s ease-in-out infinite;filter:drop-shadow(0 6px 14px rgba(0,0,0,.25))}
+  .mono{display:inline-flex;align-items:center;gap:10px;font-family:'Great Vibes',cursive;font-size:2rem;line-height:1}
+  .mono .badge{font-size:1.6rem;display:inline-block;animation:beat 1.6s ease-in-out infinite;filter:drop-shadow(0 4px 10px rgba(0,0,0,.3))}
   @keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.22)}30%{transform:scale(1)}45%{transform:scale(1.16)}}
-  .card h1{font-family:'Great Vibes',cursive;font-weight:400;font-size:clamp(2.3rem,9vw,3.1rem);line-height:1.1;margin:10px 0 8px;text-shadow:0 3px 18px rgba(120,0,40,.45)}
+  .for{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;opacity:.85;margin-top:8px}
+  .card h1{font-family:'Great Vibes',cursive;font-weight:400;font-size:clamp(2.3rem,9vw,3.1rem);line-height:1.1;margin:14px 0 8px;text-shadow:0 3px 18px rgba(120,0,40,.45)}
   .card p.sub{font-weight:300;font-size:1rem;opacity:.92;margin-bottom:26px;letter-spacing:.3px}
   .field{position:relative;margin-bottom:16px;text-align:left}
   .field input{
@@ -66,7 +77,7 @@
   .field .ico{position:absolute;left:17px;top:50%;transform:translateY(-50%);font-size:1.15rem;pointer-events:none}
   .field.shake,.card.shake{animation:shake .5s}
   @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
-  .hint{font-size:.78rem;opacity:.8;margin:2px 0 18px;font-weight:300}
+  .hint{font-size:.78rem;opacity:.85;margin:2px 0 18px;font-weight:300}
   .btn-unlock{
     width:100%;padding:16px;border:0;border-radius:50px;cursor:pointer;font:600 1.05rem 'Poppins',sans-serif;color:#fff;letter-spacing:.4px;
     background:linear-gradient(135deg,#ff7eb3,#ff2d6f 55%,#e0115f);
@@ -75,11 +86,10 @@
   }
   .btn-unlock::after{content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);animation:shine 3.2s infinite}
   @keyframes shine{to{left:140%}}
-  .btn-unlock:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 18px 40px rgba(214,16,63,.65)}
+  .btn-unlock:hover{transform:translateY(-3px) scale(1.02)}
   .btn-unlock:active{transform:scale(.97)}
   .privacy{margin-top:16px;font-size:.7rem;opacity:.7;font-weight:300}
 
-  /* transition overlay */
   #wipe{position:fixed;inset:0;z-index:50;pointer-events:none;display:flex;align-items:center;justify-content:center;overflow:hidden}
   #wipe .blob{width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,#fff 0%,#ffb3cf 35%,#ff2d6f 70%,#8e0b3a 100%);transform:scale(0);opacity:0}
   #wipe.go .blob{animation:wipe 1.8s cubic-bezier(.65,0,.35,1) forwards}
@@ -88,17 +98,23 @@
   @keyframes wipe{0%{transform:scale(0);opacity:1}45%{transform:scale(60);opacity:1}70%{transform:scale(60);opacity:1}100%{transform:scale(60);opacity:0}}
   @keyframes wipeHeart{0%{opacity:0;transform:scale(.3)}30%{opacity:1;transform:scale(1.3)}60%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(2.4)}}
 
-  /* proposal */
   #proposal{flex-direction:column;text-align:center}
   .stage{width:min(94vw,640px);display:flex;flex-direction:column;align-items:center;gap:18px;transition:opacity 1s ease,transform 1s ease}
   .stage.hidden{display:none}
   .stage.out{opacity:0;transform:translateY(-20px)}
   .line{opacity:0;transform:translateY(22px);transition:opacity 1.2s ease,transform 1.2s ease}
   .line.show{opacity:1;transform:none}
+  #scene{display:flex;flex-direction:column;align-items:center;gap:20px;min-height:40vh;justify-content:center;transition:opacity 1s ease,transform 1s ease}
+  #scene.out{opacity:0;transform:translateY(-18px)}
   .hey{font-family:'Great Vibes',cursive;font-size:clamp(3rem,13vw,5.2rem);line-height:1;text-shadow:0 4px 24px rgba(120,0,40,.5)}
-  .intro{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.2rem,5vw,1.7rem)}
-  .para{font-size:clamp(1rem,4vw,1.2rem);line-height:1.75;font-weight:300;max-width:34ch;text-shadow:0 2px 10px rgba(100,0,30,.35)}
+  .intro{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.2rem,5vw,1.7rem);text-shadow:0 2px 14px rgba(100,0,30,.5)}
+  .para{font-size:clamp(1.05rem,4.3vw,1.3rem);line-height:1.8;font-weight:300;max-width:30ch;text-shadow:0 2px 12px rgba(100,0,30,.45)}
   .para.strong{font-weight:400}
+  .para.promise{font-family:'Playfair Display',serif;font-style:italic;font-weight:500;max-width:26ch}
+  .line.words{opacity:1;transform:none}
+  .w{display:inline-block;opacity:0;transform:translateY(10px);filter:blur(5px);transition:opacity .9s ease,transform .9s ease,filter .9s ease;transition-delay:var(--wd,0s)}
+  .words.show .w{opacity:1;transform:none;filter:none}
+  .love{font-family:'Great Vibes',cursive;font-size:clamp(2.8rem,12vw,5rem);line-height:1.1;text-shadow:0 4px 24px rgba(120,0,40,.5)}
 
   .iloveyou{
     font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(2.6rem,13vw,6rem);letter-spacing:.04em;line-height:1.05;
@@ -124,25 +140,45 @@
   .btn-yes:active{transform:scale(.96)}
   .btn-yes:disabled{opacity:.6;cursor:default;animation:none}
   @keyframes pulse{0%,100%{box-shadow:0 12px 30px rgba(90,0,30,.45),0 0 0 0 rgba(255,255,255,.55)}50%{box-shadow:0 12px 30px rgba(90,0,30,.45),0 0 0 16px rgba(255,255,255,0)}}
+  .no-wrap{flex:0 0 100%;display:flex;justify-content:center;margin-top:4px}
+  .btn-no{padding:12px 26px;border-radius:50px;border:1.5px solid rgba(255,255,255,.55);background:rgba(255,255,255,.08);color:#fff;font:400 .95rem 'Poppins',sans-serif;cursor:pointer;transition:.25s}
+  .btn-no:hover{background:rgba(255,255,255,.2)}
+  .btn-no:disabled{opacity:.4;cursor:default}
+  #sad{position:fixed;inset:0;z-index:35;display:flex;overflow-y:auto;text-align:center;padding:28px 22px 40px;
+    background:radial-gradient(circle at 50% 25%,rgba(150,170,230,.28),transparent 60%),linear-gradient(160deg,#4a1535,#1d0a22 70%);
+    opacity:0;pointer-events:none;transition:opacity 1.2s}
+  #sad.show{opacity:1;pointer-events:auto}
+  #sad .inner{margin:auto;display:flex;flex-direction:column;align-items:center;max-width:440px}
+  #sad .broken{font-size:3.4rem;animation:beat 2.4s ease-in-out infinite}
+  #sad h2{font-family:'Great Vibes',cursive;font-weight:400;font-size:clamp(2.6rem,11vw,4.4rem);line-height:1.1;margin-top:8px;text-shadow:0 4px 24px rgba(0,0,0,.5)}
+  #sad .msg{margin-top:16px;font-size:clamp(1rem,4.2vw,1.2rem);font-weight:300;line-height:1.8}
+  #sad .msg p+p{margin-top:12px}
+  #sad .msg .key{font-family:'Playfair Display',serif;font-style:italic;font-size:1.25em;font-weight:500}
+  #sad .retry{margin-top:24px;padding:14px 26px;border:0;border-radius:50px;cursor:pointer;font:600 1rem 'Poppins',sans-serif;color:#fff;background:linear-gradient(135deg,#ff6fa5,#e0115f);box-shadow:0 10px 28px rgba(224,17,95,.5)}
+  #sad .pls{font-family:'Playfair Display',serif;font-style:italic;font-size:1.15em;margin-top:18px}
+  .sign{font-family:'Great Vibes',cursive;font-size:1.9rem;margin-top:6px;text-shadow:0 2px 12px rgba(100,0,30,.5)}
 
-  /* celebration message */
-  #thanks{position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;
-    background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.28),rgba(142,11,58,.55));opacity:0;pointer-events:none;transition:opacity 1.2s}
+  #thanks{position:fixed;inset:0;z-index:30;display:flex;overflow-y:auto;text-align:center;padding:28px 20px 40px;
+    background:radial-gradient(circle at 50% 25%,rgba(255,160,195,.5),transparent 65%),linear-gradient(135deg,#c20e46,#6e0830);opacity:0;pointer-events:none;transition:opacity 1.2s}
   #thanks.show{opacity:1;pointer-events:auto}
-  #thanks .big{font-family:'Great Vibes',cursive;font-size:clamp(3rem,14vw,6rem);line-height:1;text-shadow:0 6px 30px rgba(100,0,30,.6);animation:beat 1.8s infinite}
-  #thanks p{margin-top:14px;font-size:clamp(1rem,4.2vw,1.3rem);font-weight:300;max-width:30ch;line-height:1.6}
-  #thanks .ring{font-size:3rem;margin-top:14px;animation:beat 1.6s infinite}
-  #thanks .replay{margin-top:22px;background:transparent;border:1.5px solid rgba(255,255,255,.7);color:#fff;padding:10px 22px;border-radius:40px;cursor:pointer;font:400 .9rem 'Poppins',sans-serif}
-  #thanks .made{margin-top:26px;font-family:'Great Vibes',cursive;font-size:1.7rem}
+  #thanks .inner{margin:auto;display:flex;flex-direction:column;align-items:center;max-width:460px}
+  #thanks .big{font-family:'Great Vibes',cursive;font-size:clamp(3rem,14vw,5.6rem);line-height:1;text-shadow:0 6px 30px rgba(100,0,30,.6);animation:beat 1.8s infinite}
+  #thanks .ring{font-size:2.8rem;margin-top:12px;animation:beat 1.6s infinite}
+  #thanks .letter{margin-top:16px;font-size:clamp(1rem,4.2vw,1.18rem);font-weight:300;line-height:1.75;text-shadow:0 2px 10px rgba(80,0,30,.5)}
+  #thanks .letter p+p{margin-top:12px}
+  #thanks .made{margin-top:22px;font-family:'Great Vibes',cursive;font-size:1.8rem}
+  #thanks .replay{margin-top:16px;background:transparent;border:1.5px solid rgba(255,255,255,.7);color:#fff;padding:10px 22px;border-radius:40px;cursor:pointer;font:400 .9rem 'Poppins',sans-serif}
 
-  /* footer + music button */
-  .made-footer{position:fixed;bottom:0;left:0;right:0;z-index:20;text-align:center;padding:14px 12px calc(14px + env(safe-area-inset-bottom));
+  .made-footer{position:fixed;bottom:0;left:0;right:0;z-index:20;text-align:center;padding:12px 12px calc(12px + env(safe-area-inset-bottom));
     font-family:'Great Vibes',cursive;font-size:1.5rem;letter-spacing:.5px;text-shadow:0 2px 12px rgba(100,0,30,.6);pointer-events:none}
-  #music{position:fixed;top:calc(14px + env(safe-area-inset-top));right:14px;z-index:60;display:none;align-items:center;gap:8px;
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:70;background:linear-gradient(90deg,#fff,#ffb3cf);box-shadow:0 0 10px #fff;transition:width 1s ease}
+  #music,#skip{position:fixed;top:calc(14px + env(safe-area-inset-top));z-index:60;display:none;align-items:center;gap:8px;
     padding:10px 16px;border-radius:40px;border:1px solid var(--glass-border);background:rgba(255,255,255,.2);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
     color:#fff;font:500 .85rem 'Poppins',sans-serif;cursor:pointer;transition:.25s}
-  #music.visible{display:flex}
-  #music:hover{background:rgba(255,255,255,.32)}
+  #music{right:14px}
+  #skip{left:14px}
+  #music.visible,#skip.visible{display:flex}
+  #music:hover,#skip:hover{background:rgba(255,255,255,.32)}
   #music .eq{display:inline-flex;gap:2px;align-items:flex-end;height:14px}
   #music .eq i{width:3px;background:#fff;border-radius:2px;height:4px}
   #music.on .eq i{animation:eq .9s ease-in-out infinite}
@@ -154,10 +190,6 @@
   .fall{position:fixed;top:-60px;z-index:41;pointer-events:none;animation:fall linear forwards;will-change:transform}
   @keyframes fall{to{transform:translate3d(var(--sway),112vh,0) rotate(var(--spin))}}
 
-  #scene{display:flex;flex-direction:column;align-items:center;gap:20px;transition:opacity 1s ease,transform 1s ease}
-  #scene.out{opacity:0;transform:translateY(-20px)}
-  .love{font-family:'Great Vibes',cursive;font-size:clamp(2.8rem,12vw,5rem);line-height:1.1;text-shadow:0 4px 24px rgba(120,0,40,.5)}
-  .sign{font-family:'Great Vibes',cursive;font-size:1.9rem;margin-top:6px;text-shadow:0 2px 12px rgba(100,0,30,.5)}
   @media (prefers-reduced-motion:reduce){
     *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   }
@@ -165,31 +197,36 @@
 </head>
 <body>
 <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+<div id="sparkles" aria-hidden="true"></div>
 <div id="floaters" aria-hidden="true"></div>
+<div id="petals" aria-hidden="true"></div>
 <canvas id="confetti" aria-hidden="true"></canvas>
+<div id="progress" aria-hidden="true"></div>
 
+<button id="skip" type="button" aria-label="Skip to the question">Skip ›</button>
 <button id="music" type="button" aria-label="Toggle background music">
   <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span id="musicLabel">Music</span>
 </button>
 
-<!-- PAGE 1: LOGIN (playful, fictional — nothing is sent or stored) -->
+<!-- PAGE 1: LOGIN (playful, fictional: nothing is sent or stored) -->
 <main id="login" class="screen">
   <form class="card" id="loginForm" autocomplete="off" novalidate>
-    <div class="badge">❤️</div>
+    <div class="mono"><span>Fati</span><span class="badge">❤️</span><span>Maan</span></div>
+    <div class="for">Made only for you</div>
     <h1>A Special Place Just For You ❤️</h1>
     <p class="sub">Someone has something special to tell you...</p>
 
     <div class="field" id="emailField">
       <span class="ico">💌</span>
-      <input type="email" id="email" name="love-email" placeholder="Enter your email address" autocomplete="off" inputmode="email">
+      <input type="email" id="email" name="love-email" placeholder="Enter your email address" autocomplete="off" inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false">
     </div>
     <div class="field">
       <span class="ico">🔐</span>
-      <input type="password" id="code" name="love-code" placeholder="Enter your secret code" autocomplete="new-password">
+      <input type="password" id="code" name="love-code" placeholder="Enter your secret code" autocomplete="new-password" autocapitalize="off" autocorrect="off" spellcheck="false">
     </div>
     <p class="hint" id="hint">Only your special email and secret code can unlock this 💕</p>
     <button class="btn-unlock" type="submit">Unlock My Heart ❤️</button>
-    <p class="privacy">This is just a playful surprise — nothing you type is saved or sent anywhere.</p>
+    <p class="privacy">This is just a playful surprise. Nothing you type is saved or sent anywhere.</p>
   </form>
 </main>
 
@@ -203,17 +240,34 @@
     <div class="line buttons" id="buttons">
       <button class="btn-yes" type="button">YES ❤️</button>
       <button class="btn-yes alt" type="button">YES, FOREVER! 😍</button>
+      <div class="no-wrap"><button class="btn-no" id="no" type="button">No 💔</button></div>
     </div>
     <div class="line sign" id="sign">Forever yours, Maan ❤️</div>
   </section>
 </main>
 
 <div id="thanks" role="dialog" aria-live="polite">
-  <div class="big">Fati said YES!</div>
-  <div class="ring">💍</div>
-  <p>Thank you, Fati. You just made me the happiest person in the world. I promise to love you today, tomorrow, and forever.<br><br>Forever yours, Maan ❤️</p>
-  <div class="made">Made With Love, Just For You ❤️</div>
-  <button class="replay" id="replay" type="button">Celebrate again 🎉</button>
+  <div class="inner">
+    <div class="big">Fati said YES!</div>
+    <div class="ring">💍</div>
+    <div class="letter">
+      <p>Thank you, Fati. You just made me the happiest person in the world.</p>
+      <p>You are my today and all of my tomorrows. I promise to hold your hand through every season, to choose you in every ordinary moment, and to love you more with every sunrise.</p>
+      <p>You are not just the one I love. You are my home.</p>
+      <p>Forever yours,<br>Maan ❤️</p>
+    </div>
+    <div class="made">Made With Love, Just For You ❤️</div>
+    <button class="replay" id="replay" type="button">Celebrate again 🎉</button>
+  </div>
+</div>
+
+<div id="sad" role="dialog" aria-live="polite">
+  <div class="inner">
+    <div class="broken">💔</div>
+    <h2 id="sadTitle">Fati...</h2>
+    <div class="msg" id="sadMsg"></div>
+    <button class="retry" id="retry" type="button">Dobara soch lo ❤️</button>
+  </div>
 </div>
 
 <div class="made-footer" id="footer" style="display:none">Made With Love, Just For You ❤️</div>
@@ -225,9 +279,16 @@
   const rand = (a, b) => Math.random() * (b - a) + a;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- Floating hearts background ---------- */
+  /* ---------- Ambient: sparkles, floating hearts, rose petals ---------- */
+  const sp = $('#sparkles');
+  for (let i = 0; i < 34; i++) {
+    const d = document.createElement('i'); d.className = 'sp';
+    d.style.left = rand(0, 100) + '%'; d.style.top = rand(0, 100) + '%';
+    d.style.animationDelay = rand(0, 4) + 's'; d.style.animationDuration = rand(3, 6) + 's';
+    sp.appendChild(d);
+  }
   const floaters = $('#floaters');
-  const HEARTS = ['❤️','💖','💗','💕','💓','🌸','💘'];
+  const HEARTS = ['❤️','💖','💗','💕','💓','💘'];
   function spawnFloater() {
     if (document.hidden) return;
     const el = document.createElement('span');
@@ -242,17 +303,28 @@
     floaters.appendChild(el);
     setTimeout(() => el.remove(), dur * 1000 + 200);
   }
+  const petals = $('#petals');
+  function spawnPetal() {
+    if (document.hidden) return;
+    const el = document.createElement('i'); el.className = 'petal';
+    el.style.left = rand(0, 100) + 'vw';
+    el.style.setProperty('--s', rand(10, 20) + 'px');
+    el.style.setProperty('--sway', rand(30, 120) + 'px');
+    const dur = rand(9, 16); el.style.animationDuration = dur + 's';
+    petals.appendChild(el); setTimeout(() => el.remove(), dur * 1000 + 200);
+  }
   for (let i = 0; i < 14; i++) setTimeout(spawnFloater, i * 160);
-  setInterval(spawnFloater, reduced ? 1400 : 520);
+  setInterval(spawnFloater, reduced ? 1400 : 560);
+  setInterval(spawnPetal, reduced ? 2500 : 1100);
 
-  /* ---------- Romantic music (generated in-browser, no files needed) ---------- */
+  /* ---------- Romantic music (generated in the browser, no files needed) ---------- */
   const musicBtn = $('#music'), musicLabel = $('#musicLabel');
   let actx, master, delay, playing = false, timer, nextT = 0, step = 0;
   const CHORDS = [
-    [261.63, 329.63, 392.00, 493.88],   // Cmaj7
-    [220.00, 261.63, 329.63, 392.00],   // Am7
-    [174.61, 220.00, 261.63, 329.63],   // Fmaj7
-    [196.00, 246.94, 293.66, 392.00]    // G6
+    [261.63, 329.63, 392.00, 493.88],
+    [220.00, 261.63, 329.63, 392.00],
+    [174.61, 220.00, 261.63, 329.63],
+    [196.00, 246.94, 293.66, 392.00]
   ];
   const BASS = [130.81, 110.00, 87.31, 98.00];
   const PATTERN = [0, 1, 2, 3, 2, 1, 2, 1];
@@ -291,8 +363,9 @@
     const wet = actx.createGain(); wet.gain.value = 0.5;
     delay.connect(fb); fb.connect(delay); delay.connect(wet); wet.connect(master);
   }
-  function startMusic() {
+  function startSynth() {
     initAudio(); if (!actx) return;
+    mode = 'synth';
     if (actx.state === 'suspended') actx.resume();
     nextT = actx.currentTime + 0.1;
     clearInterval(timer); timer = setInterval(schedule, 60);
@@ -300,20 +373,41 @@
     master.gain.linearRampToValueAtTime(0.8, actx.currentTime + 2);
     playing = true; musicBtn.classList.add('on'); musicLabel.textContent = 'Pause';
   }
-  function stopMusic() {
+  function stopSynth() {
     if (!actx) return;
     master.gain.cancelScheduledValues(actx.currentTime);
     master.gain.linearRampToValueAtTime(0, actx.currentTime + 0.6);
     setTimeout(() => { if (!playing) { clearInterval(timer); actx.suspend(); } }, 700);
     playing = false; musicBtn.classList.remove('on'); musicLabel.textContent = 'Play';
   }
+  /* Your own song: put a file named song.mp3 next to index.html.
+     If it is missing, the built-in soft melody plays instead. */
+  const SONGS = ['song.mp3', '143.mp3'];
+  let songIdx = 0;
+  const song = new Audio(SONGS[0]);
+  song.loop = true; song.preload = 'auto'; song.volume = 0.85;
+  let useSong = true, mode = null;
+  function songUI(on) {
+    playing = on; musicBtn.classList.toggle('on', on); musicLabel.textContent = on ? 'Pause' : 'Play';
+  }
+  function startMusic() {
+    if (useSong) {
+      song.play().then(() => { mode = 'song'; songUI(true); })
+        .catch(() => {
+          if (songIdx < SONGS.length - 1) { songIdx++; song.src = SONGS[songIdx]; startMusic(); }
+          else { useSong = false; startSynth(); }
+        });
+    } else startSynth();
+  }
+  function stopMusic() {
+    if (mode === 'song') { song.pause(); songUI(false); } else stopSynth();
+  }
   musicBtn.addEventListener('click', () => playing ? stopMusic() : startMusic());
 
-  /* ---------- Login → Proposal transition ---------- */
-  const form = $('#loginForm'), emailField = $('#emailField');
+  /* ---------- Login (playful lock, client-side only) ---------- */
+  const form = $('#loginForm');
   form.addEventListener('submit', e => {
     e.preventDefault();
-    // Playful fictional lock (client-side only; nothing is sent or stored)
     const SECRET_EMAIL = 'fatilovesmeforever143@gmail.com';
     const SECRET_CODE = 'mahmaan143';
     const email = $('#email').value.trim().toLowerCase();
@@ -325,9 +419,9 @@
     }
     form.querySelector('button').disabled = true;
     startMusic();
-    musicBtn.classList.add('visible');
+    musicBtn.classList.add('visible'); $('#skip').classList.add('visible');
     $('#wipe').classList.add('go');
-    burstHearts(26);
+    for (let i = 0; i < 26; i++) setTimeout(spawnFloater, i * 30);
     setTimeout(() => {
       $('#login').classList.add('hidden');
       $('#proposal').classList.remove('hidden');
@@ -338,38 +432,74 @@
     setTimeout(() => $('#wipe').classList.remove('go'), 2000);
   });
 
-  function burstHearts(n) {
-    for (let i = 0; i < n; i++) setTimeout(spawnFloater, i * 30);
-  }
-
-  /* ---------- Proposal sequence ---------- */
+  /* ---------- The story ---------- */
   const SCENES = [
     [['hey','Hey Beautiful! ❤️'],['intro','Fati, I have something to tell you...']],
     [['para','From the moment you came into my life, everything became more beautiful.']],
     [['para strong','You are the smile behind my happiness, the peace in my heart, and the most special person in my world.']],
+    [['para','Before you, my days were just days. Now every single one has a reason to be beautiful, and that reason is you.']],
     [['para','Every morning I wake up grateful that my heart found its home in you.']],
-    [['para','With you, even the quiet moments feel like my favorite song. And on my hardest days, you are the first place my heart runs to feel safe.']],
+    [['para','With you, even the quiet moments feel like my favorite song.']],
+    [['para','On my hardest days, you are the first place my heart runs to feel safe.']],
+    [['para','I love the way you laugh, the way you care, and the way you make me feel like the luckiest person alive.']],
+    [['para','There are a thousand things I want to say, and still no words are big enough for what I feel for you.']],
+    [['para','If I could go back and choose again, I would choose you. Every time. In every life.']],
     [['para','I never knew one heart could hold so much love, until I met you, Fati.']],
-    [['para strong','No distance, no storm, and no day could ever make me love you less. I choose you today, tomorrow, and for every day of my life.']],
-    [['love','I love you, Fati ❤️'],['intro','More than words could ever say.']]
+    [['intro','I promise...'],
+     ['para promise','💗 To hold your hand when the world feels heavy.'],
+     ['para promise','💗 To make you smile, even on your hardest days.'],
+     ['para promise','💗 To respect you, protect you and cherish you.'],
+     ['para promise','💗 To love you more with every sunrise.']],
+    [['para strong','No storm, no distance and no day could ever make me love you less. I choose you today, tomorrow, and for every day of my life.']],
+    [['love','I love you, Fati ❤️'],['intro','More than words could ever say.']],
+    [['intro','So today, with all of my heart...']]
   ];
-  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  let skipped = false, wakers = [];
+  const sleep = ms => new Promise(r => {
+    if (skipped) return r();
+    const t = setTimeout(r, ms);
+    wakers.push(() => { clearTimeout(t); r(); });
+  });
+  $('#skip').addEventListener('click', () => {
+    skipped = true; wakers.forEach(w => w()); wakers = [];
+  });
+
+  function makeLine(cls, text) {
+    const isPara = cls.startsWith('para');
+    const el = document.createElement(isPara ? 'p' : 'div');
+    el.className = 'line ' + cls + (isPara ? ' words' : '');
+    if (isPara) {
+      text.split(' ').forEach((w, i, arr) => {
+        const s = document.createElement('span'); s.className = 'w'; s.textContent = w;
+        s.style.setProperty('--wd', (i * 0.1) + 's'); el.appendChild(s);
+        if (i < arr.length - 1) el.appendChild(document.createTextNode(' '));
+      });
+      el.dataset.words = text.split(' ').length;
+    } else { el.textContent = text; el.dataset.words = 0; }
+    return el;
+  }
+
   async function runSequence() {
     const box = $('#scene');
-    for (const scene of SCENES) {
+    for (let i = 0; i < SCENES.length && !skipped; i++) {
+      $('#progress').style.width = ((i + 1) / (SCENES.length + 1) * 100) + '%';
       box.innerHTML = ''; box.classList.remove('out');
-      const els = scene.map(([cls, text]) => {
-        const el = document.createElement(cls.startsWith('para') ? 'p' : 'div');
-        el.className = 'line ' + cls; el.textContent = text; box.appendChild(el); return el;
-      });
-      await sleep(400);
-      for (const el of els) { el.classList.add('show'); await sleep(1700); }
-      const chars = scene.reduce((n, [, t]) => n + t.length, 0);
-      await sleep(1500 + chars * 35);
-      box.classList.add('out'); await sleep(1000);
+      const els = SCENES[i].map(([cls, text]) => { const el = makeLine(cls, text); box.appendChild(el); return el; });
+      await sleep(350);
+      for (const el of els) {
+        if (skipped) break;
+        el.classList.add('show');
+        await sleep(+el.dataset.words ? +el.dataset.words * 100 + 1500 : 1900);
+      }
+      await sleep(1800);
+      box.classList.add('out'); await sleep(900);
     }
+    $('#progress').style.width = '100%';
+    $('#skip').classList.remove('visible');
     $('#stage1').classList.add('hidden');
     $('#stage2').classList.remove('hidden');
+    window.scrollTo(0, 0);
     buildILY();
     setTimeout(() => $('#question').classList.add('show'), 2600);
     setTimeout(() => $('#buttons').classList.add('show'), 3600);
@@ -389,7 +519,7 @@
     h.innerHTML = '<span class="hrt">❤️</span>'; box.appendChild(h);
   }
 
-  /* ---------- Celebration: confetti + falling hearts & flowers ---------- */
+  /* ---------- Celebration: confetti, hearts, flowers ---------- */
   const cv = $('#confetti'), cx = cv.getContext('2d');
   let W, H, parts = [], raf = null;
   function resize() {
@@ -447,10 +577,65 @@
     document.body.appendChild(el); setTimeout(() => el.remove(), d * 1000 + 200);
   }
 
+  /* ---------- If she says No ---------- */
+  const sad = $('#sad'); let sadIv = null;
+  function dropSad() {
+    const el = document.createElement('span'); el.className = 'fall';
+    el.textContent = ['💧','💔','🥀','💧'][Math.floor(Math.random() * 4)];
+    el.style.left = rand(0, 100) + 'vw'; el.style.fontSize = rand(16, 30) + 'px';
+    el.style.setProperty('--sway', rand(-40, 40) + 'px');
+    el.style.setProperty('--spin', rand(-90, 90) + 'deg');
+    const d = rand(6, 10); el.style.animationDuration = d + 's';
+    document.body.appendChild(el); setTimeout(() => el.remove(), d * 1000 + 200);
+  }
+  let noCount = 0;
+  const SAD = [
+    { title: 'Fati...', btn: 'Dobara soch lo ❤️', html: `
+      <p>Koi baat nahi. Meri mohabbat tumhare jawab ki mohtaj nahi.</p>
+      <p class="key">Main tum se bohat pyar karta hun, Fati.</p>
+      <p>Aur main hamesha karta rahunga, chahe tum meri ho ya na ho. Tum meri duniya ho, meri dua ho, meri sab se pyari khushi ho.</p>
+      <p>Bas ek baar phir se dil se soch lo... 🥺</p>
+      <p>Tumhara,<br>Maan ❤️</p>` },
+    { title: 'Fati, ek dafa phir soch lo...', btn: 'Chalo, phir se sochti hun ❤️', html: `
+      <p>Main tumhara jawab dil se samajhta hun, lekin mera dil abhi bhi ummeed rakhta hai.</p>
+      <p>Ek baar meri aankhon mein, meri mohabbat mein jhank kar dekho. Is dil mein sirf tumhara naam hai.</p>
+      <p class="pls">Han kar do na yaar 🥺</p>
+      <p>Tumhara,<br>Maan ❤️</p>` },
+    { title: 'Theek hai, Fati...', btn: 'Phir bhi, ek aakhri baar soch lo 🥺', html: `
+      <p>Mera dil toot gaya hai, lekin tum se meri mohabbat nahi tooti.</p>
+      <p>Maine tumhein sirf chaha nahi, tumhari khushi ko hamesha apni khushi se pehle rakha hai. Agar meri mohabbat tumhari manzil nahi, to shayad yehi meri kismat hai.</p>
+      <p class="key">Mera dil toota hai, magar meri dua tumhare saath hai.</p>
+      <p>Meri dua hai ke tumhari zindagi mein hamesha hansi ho, sukoon ho, aur wo har khushi mile jis ki tum haqdar ho.</p>
+      <p>Allah tumhein har gham se door rakhe, har burai se bachaye, aur tumhare saare khwab poore kare. Ameen.</p>
+      <p>Main hamesha tumhara dua-go rahunga.</p>
+      <p>Hamesha tumhara,<br>Maan 💔</p>` }
+  ];
+  $('#no').addEventListener('click', () => {
+    const lv = SAD[Math.min(noCount, SAD.length - 1)]; noCount++;
+    $('#sadTitle').textContent = lv.title; $('#sadMsg').innerHTML = lv.html; $('#retry').textContent = lv.btn;
+    sad.classList.add('show'); sad.scrollTop = 0;
+    clearInterval(sadIv); sadIv = setInterval(dropSad, 500);
+    if (navigator.vibrate) navigator.vibrate(200);
+  });
+  $('#retry').addEventListener('click', () => {
+    sad.classList.remove('show'); clearInterval(sadIv);
+  });
+
+  /* If she says YES after saying No, she gets a different, extra emotional letter */
+  const LATE_YES = `
+    <p>Fati... mujhe yaqeen nahi aa raha. Main bohat khush hun ke tum ne haan keh di. 🥹</p>
+    <p>Tumhari ek "haan" ne meri poori duniya roshan kar di. Yeh meri zindagi ki sab se badi achievement hai, meri sab se badi kamyabi.</p>
+    <p>Mujhe kisi degree, kisi daulat ya kisi manzil ki itni khushi nahi, jitni tumhare is ek lafz ki hai.</p>
+    <p>Allah ka lakh lakh shukar hai ke usne tumhein meri zindagi bana diya. Main wada karta hun ke is haan ki har din izzat karunga, aur tumhein hamesha pyar, izzat aur sukoon dunga.</p>
+    <p>Tum meri mohabbat bhi ho, aur meri dua ka jawab bhi.</p>
+    <p>Hamesha tumhara,<br>Maan ❤️</p>`;
+
   let celebrating = false;
   function celebrate() {
     if (celebrating) return; celebrating = true;
     document.querySelectorAll('.btn-yes').forEach(b => b.disabled = true);
+    $('#no').disabled = true; sad.classList.remove('show'); clearInterval(sadIv);
+    if (noCount > 0) document.querySelector('#thanks .letter').innerHTML = LATE_YES;
     addConfetti(160, W / 2, H * .55);
     setTimeout(() => addConfetti(110, W * .2, H * .5), 300);
     setTimeout(() => addConfetti(110, W * .8, H * .5), 500);
@@ -468,6 +653,7 @@
   $('#replay').addEventListener('click', () => {
     celebrating = false;
     document.querySelectorAll('.btn-yes').forEach(b => b.disabled = false);
+    $('#no').disabled = false;
     celebrate();
   });
 })();
